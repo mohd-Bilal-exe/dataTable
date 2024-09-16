@@ -8,7 +8,7 @@ interface Artwork {
   date_end: string;
 }
 
-export default async function fetchData(
+export async function fetchData(
   page: number = 1, 
   setLoading: (loading: boolean) => void, // Explicitly setLoading expects a boolean
   setArtworks: (artworks: Artwork[]) => void, // setArtworks expects an array of Artwork objects
