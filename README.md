@@ -1,7 +1,3 @@
-Here’s a sample `README.md` for your project:
-
----
-
 # Artworks Table
 
 This repository contains the code for an internship assignment at **GrowMeOrganic Pvt Ltd**. The project is a React application featuring a dynamic artworks table, with data fetched from the Art Institute of Chicago API. The application is styled using **PrimeReact** components and supports features like pagination, row selection, and multi-page selection.
@@ -49,25 +45,8 @@ Check out the live version of the project: [Artworks Table](https://artworkstabl
    npm run dev
    ```
 
-4. Visit `http://localhost:3000` in your browser to view the app locally.
+4. Visit `http://localhost:5173` in your browser to view the app locally.
 
-## ESLint Configuration
-The ESLint configuration has been expanded to enable type-checking and React-specific rules. Below is a part of the configuration:
-
-```js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    react,
-  },
-  rules: {
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
 
 ## License
 This project is licensed under the MIT License.
