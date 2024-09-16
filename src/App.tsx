@@ -61,7 +61,7 @@ const handleSelectAcrosspages = async (rows: number) => {
       // Set the selectedArt only when the data is available
       setSelectedArt(selected);
       // Now loop through the selected items and dispatch actions
-      selected.forEach((item) => {
+      selectedArt.forEach((item) => {
         dispatch(selectItem(item.id));
       });
     }
