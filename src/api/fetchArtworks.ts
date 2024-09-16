@@ -28,31 +28,27 @@ console.log("fetching page", page)
     setLoading(false);
   }
 }
-
-export async function fetchDataSelection(page: number, rows: number) {
+export async function fetchDataSelection(page: number, rows: number): Promise<Artwork[]> { // Define return type as Artwork[]
   try {
-    const arr: any[] = [];
-    const rowsPerPage = 12; // API returns 12 items per page
-    const totalPagesNeeded = Math.ceil(rows / rowsPerPage); // Calculate total pages required
+    const arr: Artwork[] = []; // Define array type explicitly as Artwork[]
+    const rowsPerPage = 12;
+    const totalPagesNeeded = Math.ceil(rows / rowsPerPage);
     console.log(`Fetching ${totalPagesNeeded} pages for ${rows} rows from page ${page}`);
 
-    // Loop through the pages and fetch data
-    for (let i = 1; i <= totalPagesNeeded+page; i++) {
-      const currentPage = page + i; // Adjust for current page offset
+    for (let i = 1; i <= totalPagesNeeded + page; i++) {
+      const currentPage = page + i;
       console.log(`Fetching page ${currentPage}`);
-console.log(`while being on  page ${page}`);
       const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${currentPage}`);
       const data = await response.json();
 
-      // Push data into the array
       arr.push(...data.data);
     }
 
-    // Trim the array to the exact number of rows requested
     const slicedArr = arr.slice(0, rows);
     console.log('Selected items:', slicedArr);
-    return slicedArr; // Return the sliced array
+    return slicedArr; // Return the correctly typed array
   } catch (error) {
     console.error('Error fetching data in fetchDataSelection:', error);
+    return []; // Return an empty array in case of error
   }
 }

@@ -52,23 +52,21 @@ console.log(selectedItems);
       />
     );
   };
-  const [selectedArt, setSelectedArt]=useState([])
+  const [selectedArt, setSelectedArt] = useState<Artwork[]>([]); // Explicitly define type as Artwork[]
 const handleSelectAcrosspages = async (rows: number) => {
   try {
-    // Wait for the fetchDataSelection function to resolve
     const selected = await fetchDataSelection(page, rows);
     if (selected) {
-      // Set the selectedArt only when the data is available
-      setSelectedArt(selected);
-      // Now loop through the selected items and dispatch actions
+      setSelectedArt(selected); // This is now an array of Artwork objects
       selectedArt.forEach((item) => {
-        dispatch(selectItem(item.id));
+        dispatch(selectItem(item.id)); // No type error now
       });
     }
   } catch (error) {
     console.error('Error in handleSelectAcrosspages:', error);
   }
 };
+
 
 const handleMultiSelect = (rows: number) => {
   if (rows <= 12) {
