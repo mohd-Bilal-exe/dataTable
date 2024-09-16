@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.p-datatable .p-paginator {
+  @apply p-2 mt-[1px]  font-normal;
+}
+.p-datatable .p-paginator .p-link {
+  @apply w-8 h-8  px-2 py-1 m-[2px] rounded text-white bg-white/5 hover:bg-white/10;
+}
+.p-paginator-current {
+  @apply text-white mr-4;
+}
+tr {
+  @apply transition-all duration-300;
+}
