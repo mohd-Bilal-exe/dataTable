@@ -1,50 +1,77 @@
-# React + TypeScript + Vite
+Here’s a sample `README.md` for your project:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# Artworks Table
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This repository contains the code for an internship assignment at **GrowMeOrganic Pvt Ltd**. The project is a React application featuring a dynamic artworks table, with data fetched from the Art Institute of Chicago API. The application is styled using **PrimeReact** components and supports features like pagination, row selection, and multi-page selection.
 
-## Expanding the ESLint configuration
+## Live Demo
+Check out the live version of the project: [Artworks Table](https://artworkstable.netlify.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
+- **React & TypeScript**: Built with React and TypeScript for type-safe and scalable development.
+- **PrimeReact**: UI components like DataTable, Checkbox, and Pagination are from PrimeReact, providing a sleek and functional design.
+- **Redux**: Used for managing the state of selected artworks across the table.
+- **API Integration**: Fetches artworks dynamically from the Art Institute of Chicago's API.
+- **Pagination**: Supports lazy loading with server-side pagination, fetching only 12 records at a time.
+- **Row Selection**: Users can select artworks across multiple pages, with global state management of selected items.
+- **Multi-page Selection**: Select multiple artworks beyond the visible page, handled via API calls.
 
-- Configure the top-level `parserOptions` property like this:
+## How It Works
+1. **Data Fetching**: The app fetches data from the Art Institute of Chicago API, handling pagination to load artworks dynamically when a user navigates between pages.
+2. **Row Selection**: Users can select rows using checkboxes. The selection is handled via Redux, allowing for persistent state across pages.
+3. **Multi-select Functionality**: Users can specify a custom number of rows to select across multiple pages. This feature makes use of API requests to fetch and select artworks in bulk.
+4. **ESLint**: The project uses an enhanced ESLint configuration, with type-aware rules and the React plugin to maintain code quality and consistency.
+
+## Technologies Used
+- **React**: Frontend framework for building the UI.
+- **TypeScript**: Ensures type safety and helps prevent bugs.
+- **PrimeReact**: Provides the data table, pagination, and UI components.
+- **Redux**: State management for selected artworks.
+- **Art Institute of Chicago API**: Provides the artworks data.
+- **ESLint**: For linting and code quality, with type-checking enabled.
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/artworks-table.git
+   cd artworks-table
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Visit `http://localhost:3000` in your browser to view the app locally.
+
+## ESLint Configuration
+The ESLint configuration has been expanded to enable type-checking and React-specific rules. Below is a part of the configuration:
 
 ```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
 import react from 'eslint-plugin-react'
 
 export default tseslint.config({
-  // Set the react version
   settings: { react: { version: '18.3' } },
   plugins: {
-    // Add the react plugin
     react,
   },
   rules: {
-    // other rules...
-    // Enable its recommended rules
     ...react.configs.recommended.rules,
     ...react.configs['jsx-runtime'].rules,
   },
 })
 ```
+
+## License
+This project is licensed under the MIT License.
+
+---
+
+Feel free to adjust any details as needed.
