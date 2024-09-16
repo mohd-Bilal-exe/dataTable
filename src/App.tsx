@@ -27,7 +27,7 @@ const ArtworksTable = () => {
 
   const selectedItems = useSelector((state: RootState) => state.selectedItems.selectedItems);
   const dispatch = useDispatch<AppDispatch>();
-console.log(selectedItems);
+   //console.log(selectedItems);
   // Fetch data on component load or page change
   useEffect(() => {
     fetchData(page , setLoading, setArtworks, setTotalRecords);
@@ -57,7 +57,7 @@ const handleSelectAcrosspages = async (rows: number) => {
     const selected = await fetchDataSelection(page, rows);
     if (selected) {
       selected.forEach((item) => {
-        dispatch(selectItem(item.id)); // No type error now
+        dispatch(selectItem(item.id)); 
       });
     }
   } catch (error) {
@@ -142,7 +142,7 @@ const handleMultiSelect = (rows: number) => {
 
   // Handle pagination using DataTableStateEvent
   const onPage = (event: DataTableStateEvent) => {
-  const currentPage = (event.page ?? 0) + 1; // Adjust to match API (page starts from 1)
+  const currentPage = (event.page ?? 0) + 1;
   setPage(currentPage);
   fetchData(currentPage, setLoading, setArtworks, setTotalRecords);
 };
@@ -162,7 +162,7 @@ const handleMultiSelect = (rows: number) => {
         totalRecords={totalRecords}
         lazy
         loading={loading}
-        onPage={onPage} // Now using correct event type
+        onPage={onPage} 
         dataKey="id"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
         currentPageReportTemplate="Showing {first} to {last}"

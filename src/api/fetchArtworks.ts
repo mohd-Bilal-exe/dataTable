@@ -16,7 +16,7 @@ export async function fetchData(
 ): Promise<void> {
   try {
     setLoading(true);
-console.log("fetching page", page)
+   //console.log("fetching page", page)
     const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}`);
     const data = await response.json();
 
@@ -33,7 +33,7 @@ export async function fetchDataSelection(page: number, rows: number): Promise<Ar
     const arr: Artwork[] = []; // Define array type explicitly as Artwork[]
     const rowsPerPage = 12;
     const totalPagesNeeded = Math.ceil(rows / rowsPerPage);
-    console.log(`Fetching ${totalPagesNeeded} pages for ${rows} rows from page ${page}`);
+    //console.log(`Fetching ${totalPagesNeeded} pages for ${rows} rows from page ${page}`);
 
     for (let i = 0; i < totalPagesNeeded; i++) {
       const currentPage = page + i;
@@ -45,7 +45,7 @@ export async function fetchDataSelection(page: number, rows: number): Promise<Ar
     }
 
     const slicedArr = arr.slice(0, rows);
-    console.log('Selected items:', slicedArr);
+    //console.log('Selected items:', slicedArr);
     return slicedArr; // Return the correctly typed array
   } catch (error) {
     console.error('Error fetching data in fetchDataSelection:', error);
