@@ -51,14 +51,12 @@ console.log(selectedItems);
         inputId={`checkbox_${rowData.id}`}
       />
     );
-  };
-  const [selectedArt, setSelectedArt] = useState<Artwork[]>([]); // Explicitly define type as Artwork[]
+  }; 
 const handleSelectAcrosspages = async (rows: number) => {
   try {
     const selected = await fetchDataSelection(page, rows);
     if (selected) {
-      setSelectedArt(selected); // This is now an array of Artwork objects
-      selectedArt.forEach((item) => {
+      selected.forEach((item) => {
         dispatch(selectItem(item.id)); // No type error now
       });
     }

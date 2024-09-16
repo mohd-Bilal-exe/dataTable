@@ -17,7 +17,7 @@ export async function fetchData(
   try {
     setLoading(true);
 console.log("fetching page", page)
-    const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page+1}`);
+    const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}`);
     const data = await response.json();
 
     setArtworks(data.data); // Set artworks from API data
@@ -35,7 +35,7 @@ export async function fetchDataSelection(page: number, rows: number): Promise<Ar
     const totalPagesNeeded = Math.ceil(rows / rowsPerPage);
     console.log(`Fetching ${totalPagesNeeded} pages for ${rows} rows from page ${page}`);
 
-    for (let i = 1; i <= totalPagesNeeded + page; i++) {
+    for (let i = 0; i < totalPagesNeeded; i++) {
       const currentPage = page + i;
       console.log(`Fetching page ${currentPage}`);
       const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${currentPage}`);
