@@ -22,15 +22,16 @@ const ArtworksTable = () => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [totalRecords, setTotalRecords] = useState(0); // Total records for pagination
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0); // Track current page
+  const [page, setPage] = useState(1); // Track current page
   const [selectAll, setSelectAll] = useState(false);
 
   const selectedItems = useSelector((state: RootState) => state.selectedItems.selectedItems);
   const dispatch = useDispatch<AppDispatch>();
-
+console.log(selectedItems);
   // Fetch data on component load or page change
   useEffect(() => {
-    fetchData(page + 1, setLoading, setArtworks, setTotalRecords);
+    fetchData(page , setLoading, setArtworks, setTotalRecords);
+    console.log(page);
     setSelectAll(false);
   }, [page]);
 
@@ -51,17 +52,39 @@ const ArtworksTable = () => {
       />
     );
   };
+  const [selectedArt, setSelectedArt]=useState([])
+const handleSelectAcrosspages = async (rows: number) => {
+  try {
+    // Wait for the fetchDataSelection function to resolve
+    const selected = await fetchDataSelection(page, rows);
+    if (selected) {
+      // Set the selectedArt only when the data is available
+      setSelectedArt(selected);
+      // Now loop through the selected items and dispatch actions
+      selected.forEach((item) => {
+        dispatch(selectItem(item.id));
+      });
+    }
+  } catch (error) {
+    console.error('Error in handleSelectAcrosspages:', error);
+  }
+};
 
-  const handleMultiSelect = (num: number) => {
-    const array = artworks.slice(0, num);
-    array.forEach((item) => {
-      dispatch(selectItem(item.id));
-    });
-  };
+const handleMultiSelect = (rows: number) => {
+  if (rows <= 12) {
+    // Select from the current page if rows are 12 or less
+    const array = artworks.slice(0, rows);
+    array.forEach((item) => dispatch(selectItem(item.id)));
+  } else {
+    // Fetch from multiple pages if rows > 12
+    handleSelectAcrosspages(rows);
+  }
+};
+
 
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
-    const array = artworks.slice(0, 10);
+    const array = artworks.slice(0, 12);
     array.forEach((item) => {
       if (selectAll) {
         dispatch(deselectItem(item.id));
@@ -123,10 +146,11 @@ const ArtworksTable = () => {
 
   // Handle pagination using DataTableStateEvent
   const onPage = (event: DataTableStateEvent) => {
-    const currentPage = event.page ?? 0; // Handle case where page is undefined
-    setPage(currentPage);
-    fetchData(currentPage + 1, setLoading, setArtworks, setTotalRecords);
-  };
+  const currentPage = (event.page ?? 0) + 1; // Adjust to match API (page starts from 1)
+  setPage(currentPage);
+  fetchData(currentPage, setLoading, setArtworks, setTotalRecords);
+};
+
 
   const rowClass = (rowData: Artwork) => selectedItems.includes(rowData.id) ? 'bg-purple-100/90 text-black' : '';
 
@@ -135,7 +159,7 @@ const ArtworksTable = () => {
       <DataTable
         value={artworks}
         paginator
-        rows={5}
+        rows={12}
         rowClassName={rowClass}
         className="w-screen h-screen"
         tableClassName="w-full h-full"

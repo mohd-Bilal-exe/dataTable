@@ -9,43 +9,50 @@ interface Artwork {
 }
 
 export async function fetchData(
-  page: number = 1, 
-  setLoading: (loading: boolean) => void, // Explicitly setLoading expects a boolean
-  setArtworks: (artworks: Artwork[]) => void, // setArtworks expects an array of Artwork objects
-  setTotalRecords: (total: number) => void // setTotalRecords expects a number
-): Promise<void> { // The function itself returns a Promise that resolves to void
+  page: number = 1, // Set default to 1, as API starts from page 1
+  setLoading: (loading: boolean) => void,
+  setArtworks: (artworks: Artwork[]) => void,
+  setTotalRecords: (total: number) => void
+): Promise<void> {
   try {
-    setLoading(true); // Set loading to true while fetching data
-
-    const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}`);
+    setLoading(true);
+console.log("fetching page", page)
+    const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page+1}`);
     const data = await response.json();
 
-    setArtworks(data.data); // Set the artwork data
-    setTotalRecords(data.pagination.total); // Assuming total records are provided in the API response
+    setArtworks(data.data); // Set artworks from API data
+    setTotalRecords(data.pagination.total); // Set total records from API response
   } catch (error) {
-    console.error('Error fetching data:', error); // Handle any errors during the fetch
+    console.error('Error fetching data:', error);
   } finally {
-    setLoading(false); // Set loading to false once data fetching is complete
+    setLoading(false);
   }
 }
-export async function fetchDataSelection(page: number = 1, rows: number) {
-  try {
-    const arr: any[] = []; // Proper array initialization
-    const totalPages = Math.ceil(rows / 10); // Fetch in chunks of 10
 
-    for (let i = 0; i < totalPages; i++) {
-      const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page + i}`);
+export async function fetchDataSelection(page: number, rows: number) {
+  try {
+    const arr: any[] = [];
+    const rowsPerPage = 12; // API returns 12 items per page
+    const totalPagesNeeded = Math.ceil(rows / rowsPerPage); // Calculate total pages required
+    console.log(`Fetching ${totalPagesNeeded} pages for ${rows} rows from page ${page}`);
+
+    // Loop through the pages and fetch data
+    for (let i = 1; i <= totalPagesNeeded+page; i++) {
+      const currentPage = page + i; // Adjust for current page offset
+      console.log(`Fetching page ${currentPage}`);
+console.log(`while being on  page ${page}`);
+      const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${currentPage}`);
       const data = await response.json();
 
-      // Extract the data and push it to the array
-      arr.push(...data.data); // Using spread to push multiple items
+      // Push data into the array
+      arr.push(...data.data);
     }
 
-    // Trim the array to the required size
-    const slicedArr = arr.slice(0, rows); // Ensure the array is of length `rows`
-
+    // Trim the array to the exact number of rows requested
+    const slicedArr = arr.slice(0, rows);
+    console.log('Selected items:', slicedArr);
     return slicedArr; // Return the sliced array
   } catch (error) {
-    console.error('Error fetching data:', error); // Handle any errors during the fetch
+    console.error('Error fetching data in fetchDataSelection:', error);
   }
 }
