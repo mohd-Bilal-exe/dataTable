@@ -6,7 +6,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from './redux/Store';
 import { deselectItem, selectItem } from './redux/Actions';
-import fetchData from './api/fetchArtworks';
+import { fetchData, fetchDataSelection } from './api/fetchArtworks';
 
 interface Artwork {
   id: string;
