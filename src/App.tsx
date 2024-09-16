@@ -53,6 +53,7 @@ const ArtworksTable = () => {
       />
     );
   };
+  // Add call to api for next rows 
 const handleMultiSelect = (num: number) => {
     const array = artworks.slice(0, num);
     array.forEach((item) => {
